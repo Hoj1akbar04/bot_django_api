@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import asyncpg
 from aiogram import types
 from aiogram.dispatcher.filters.builtin import CommandStart
@@ -14,6 +16,7 @@ async def bot_start(message: types.Message):
             telegram_id=message.from_user.id,
             full_name=message.from_user.full_name,
             username=message.from_user.username,
+            create_date=datetime.now(),
         )
     except asyncpg.exceptions.UniqueViolationError:
         user = await db.select_user(telegram_id=message.from_user.id)
